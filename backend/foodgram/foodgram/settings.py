@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'recipes.apps.RecipesConfig',
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
+    'core',
     'django_filters',
 ]
 
@@ -71,10 +72,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-
+#DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
@@ -162,3 +165,12 @@ DJOSER = {
 }
 
 EMPTY_VALUE = 'пусто'
+
+JSON_PATH = 'data/ingredients.json'
+HELP_IMPORT_JSON_MESSAGE = 'Импорт данных из .json'
+
+CSV_PATH = 'data/ingredients.csv'
+HELP_IMPORT_CSV_MESSAGE = 'Импорт данных из .csv'
+
+
+SUCCES_IMPORT_MESSAGE = 'Загрузка данных завершена'

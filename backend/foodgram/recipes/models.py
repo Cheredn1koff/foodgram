@@ -4,6 +4,21 @@ from django.db import models
 from users.models import User
 
 
+
+class Unit(models.Model):
+    name = models.CharField(
+        verbose_name='единица измерения',
+        max_length=200
+    )
+
+    class Meta:
+        verbose_name = 'Единицы измерения'
+        verbose_name_plural = 'Единицы измерений'
+
+    def __str__(self):
+        return self.name
+
+
 class Tag(models.Model):
     name = models.CharField(
         'Название',
@@ -34,9 +49,12 @@ class Ingredient(models.Model):
         'Название',
         max_length=200,
     )
-    measurement_unit = models.CharField(
-        'Единица измерения',
+    measurement_unit = models.ForeignKey(
+        Unit,
         max_length=200,
+        verbose_name='единица измерения',
+        related_name='ingredients',
+        on_delete=models.CASCADE,
     )
 
     class Meta:
