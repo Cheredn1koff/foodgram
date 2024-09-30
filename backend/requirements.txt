@@ -8,3 +8,5 @@ xhtml2pdf==0.2.11
 psycopg2-binary==2.9.3
 python-dotenv==1.0.0
 django-filter==23.2
+isort
+flake8
