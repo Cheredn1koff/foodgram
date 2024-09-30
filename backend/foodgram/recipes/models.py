@@ -4,7 +4,6 @@ from django.db import models
 from users.models import User
 
 
-
 class Unit(models.Model):
     name = models.CharField(
         verbose_name='единица измерения',
