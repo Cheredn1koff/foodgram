@@ -2,7 +2,7 @@
 
 
 class IsAdminAuthorOrReadOnly(permissions.BasePermission):
-    """Права доступа для автора либо алминистратора."""
+    """Права доступа для автора или алминистратора."""
     def has_permission(self, request, view):
         return (request.method in permissions.SAFE_METHODS
                 or request.user.is_authenticated)
