@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run_pytest:
+  tests:
     runs-on: ubuntu-latest
     services:
       postgres:
