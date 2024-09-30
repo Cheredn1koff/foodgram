@@ -9,7 +9,7 @@ MODELS_FIELDS = {}
 
 
 class Command(BaseCommand):
-    help = 'Creating model objects according the file path specified'
+    help = 'Creating model objects according the file path specified!'
 
     def add_arguments(self, parser):
         parser.add_argument('--path', type=str, help="file path")
