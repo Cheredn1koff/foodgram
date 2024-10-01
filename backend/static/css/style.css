@@ -1,0 +1,28 @@
+@font-face { font-family: Zlusa_font; src: url("static/fonts/Zlusa _font.ttf"); }
+body{
+  font-family: Zlusa_font;
+  font-size: 22px;
+
+  
+}
+
+@page {
+  margin-top: 5.5cm;
+  margin-bottom: 6cm;
+  margin-left: 5cm;
+  margin-right: 5cm;
+  line-height: 1;
+  size: a4;
+  background-image: url('static/img/background.jpg');
+  @frame footer_frame {
+    -pdf-frame-content: footer_content;
+    width: 512pt; bottom: 5cm; height: 1cm;
+}
+}
+.text-center{
+  text-align:center!important
+}
+.table-header {
+  background-color: #eec4a9;
+  border-top: 1px solid #ddd;
+}

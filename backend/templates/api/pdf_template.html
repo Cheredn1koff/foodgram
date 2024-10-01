@@ -1,0 +1,27 @@
+{% load static %}
+
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <div class="text-center">
+      <img src="{% static 'img/logo.png' %}" width="120" height="120">
+      <h1>Список покупок для пользователя {{user.first_name}}</h1>
+    </div>
+    <table class="text-center">
+      <tr class="table-header">
+        <th>Название ингредиента</th><th>Количество</th>
+      </tr>
+      {% for ingredient in ingredients %}
+      <tr>
+        <td>{{ ingredient.ingredient__name }}</td><td>{{ ingredient.total }} {{ ingredient.ingredient__measurement_unit__name}}</td>
+      </tr>
+      {% endfor %}  
+    </table>
+    <div class ="text-center" id="footer_content">
+      Страница <pdf:pagenumber> из <pdf:pagecount>
+    </div>
+  </body>
+</html>
