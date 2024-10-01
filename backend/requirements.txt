@@ -1,4 +1,4 @@
-Django==3.2.3
+﻿Django==3.2.3
 djangorestframework==3.12.4
 django-filter==23.2
 djoser==2.1.0
@@ -8,6 +8,5 @@ xhtml2pdf==0.2.11
 psycopg2-binary==2.9.3
 python-dotenv==1.0.0
 django-filter==23.2
-pytest==6.2.4
-pytest-pythonpath==0.7.3
-pytest-django==4.4.0
+isort
+flake8
