@@ -27,7 +27,7 @@ class UserSignUpSerializer(UserCreateSerializer):
         )
 
 
-class UserGetSerializer(UserSerializer):    
+class UserGetSerializer(UserSerializer):
     """Работа с информацией о пользователях."""
     is_subscribed = serializers.SerializerMethodField()
 
