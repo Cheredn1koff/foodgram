@@ -27,16 +27,17 @@ class UserSignUpSerializer(UserCreateSerializer):
         )
 
 
-class UserGetSerializer(UserSerializer):
+class UserGetSerializer(UserSerializer):    
     """Работа с информацией о пользователях."""
     is_subscribed = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = User
         fields = (
-            'email', 'id', 'username', 'first_name', 'last_name', 'is_subscribed'
+            'email', 'id', 'username', 'first_name',
+            'last_name', 'is_subscribed'
         )
-    
+
     def get_is_subscribed(self, obj):
         request = self.context.get('request')
         return (
@@ -62,7 +63,7 @@ class UserSubscribeRepresentSerializer(UserGetSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'id', 'username', 'first_name','last_name',
+            'email', 'id', 'username', 'first_name', 'last_name',
             'is_subscribed', 'recipes', 'recipes_count'
         )
         read_only_fields = (
