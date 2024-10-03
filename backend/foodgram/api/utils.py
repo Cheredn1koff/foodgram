@@ -20,11 +20,12 @@ class Base64ImageField(serializers.ImageField):
 
 
 def create_ingredients(ingredients, recipe):
-    """Добавления ингредиентов при создании/редактировании рецепта."""
+    """Добавление ингредиентов."""
     ingredient_list = []
     for ingredient in ingredients:
-        current_ingredient = get_object_or_404(Ingredient,
-                                               id=ingredient.get('id'))
+        current_ingredient = get_object_or_404(
+            Ingredient, id=ingredient.get('id')
+        )
         amount = ingredient.get('amount')
         ingredient_list.append(
             RecipeIngredient(
@@ -37,7 +38,7 @@ def create_ingredients(ingredients, recipe):
 
 
 def create_model_instance(request, instance, serializer_name):
-    """Добавления рецепта в избранное, список покупок."""
+    """Добавления рецепта в избранное или список покупок."""
     serializer = serializer_name(
         data={'user': request.user.id, 'recipe': instance.id, },
         context={'request': request}
@@ -48,10 +49,12 @@ def create_model_instance(request, instance, serializer_name):
 
 
 def delete_model_instance(request, model_name, instance, error_message):
-    """Удаления рецепта из избранного, списка покупок."""
-    if not model_name.objects.filter(user=request.user,
-                                     recipe=instance).exists():
-        return Response({'errors': error_message},
-                        status=status.HTTP_400_BAD_REQUEST)
+    """Удаления рецепта из избранного или из списка покупок."""
+    if not model_name.objects.filter(
+        user=request.user, recipe=instance
+    ).exists():
+        return Response(
+            {'errors': error_message}, status=status.HTTP_400_BAD_REQUEST
+        )
     model_name.objects.filter(user=request.user, recipe=instance).delete()
     return Response(status=status.HTTP_204_NO_CONTENT)

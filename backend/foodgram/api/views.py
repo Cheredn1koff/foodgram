@@ -1,4 +1,4 @@
-from django.db.models import Sum
+﻿from django.db.models import Sum
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import HttpResponse, get_object_or_404
 from rest_framework import mixins, status, viewsets
@@ -22,7 +22,7 @@ from users.models import Subscription, User
 
 
 class UserSubscribeView(APIView):
-    """Создание, удаление подписки на пользователя."""
+    """Создание и удаление подписки на пользователя."""
     def post(self, request, user_id):
         author = get_object_or_404(User, id=user_id)
         serializer = UserSubscribeSerializer(
@@ -35,14 +35,14 @@ class UserSubscribeView(APIView):
 
     def delete(self, request, user_id):
         author = get_object_or_404(User, id=user_id)
-        if not Subscription.objects.filter(user=request.user,
-                                           author=author).exists():
+        if not Subscription.objects.filter(
+            user=request.user, author=author
+        ).exists():
             return Response(
                 {'errors': 'Вы не подписаны на этого пользователя'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        Subscription.objects.get(user=request.user.id,
-                                 author=user_id).delete()
+        Subscription.objects.get(user=request.user.id, author=user_id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -96,15 +96,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated, ]
     )
     def favorite(self, request, pk):
-        """Удаление, добавление рецептов в избранное."""
+        """Удаление и добавление рецептов в избранное."""
         recipe = get_object_or_404(Recipe, id=pk)
         if request.method == 'POST':
             return create_model_instance(request, recipe, FavoriteSerializer)
 
         if request.method == 'DELETE':
             error_message = 'У вас нет этого рецепта в избранном'
-            return delete_model_instance(request, Favorite,
-                                         recipe, error_message)
+            return delete_model_instance(
+                request, Favorite, recipe, error_message
+            )
 
     @action(
         detail=True,
@@ -112,16 +113,18 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated, ]
     )
     def shopping_cart(self, request, pk):
-        """Удаление, добавление в список покупок."""
+        """Удаление и добавление в список покупок."""
         recipe = get_object_or_404(Recipe, id=pk)
         if request.method == 'POST':
-            return create_model_instance(request, recipe,
-                                         ShoppingCartSerializer)
+            return create_model_instance(
+                request, recipe, ShoppingCartSerializer
+            )
 
         if request.method == 'DELETE':
             error_message = 'У вас нет этого рецепта в списке покупок'
-            return delete_model_instance(request, ShoppingCart,
-                                         recipe, error_message)
+            return delete_model_instance(
+                request, ShoppingCart, recipe, error_message
+            )
 
     @action(
         detail=False,
