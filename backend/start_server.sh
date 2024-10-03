@@ -8,4 +8,4 @@ python manage.py collectstatic --noinput
 
 python manage.py load_ingredients
 
-gunicorn --bind 0:8080 foodgram.wsgi:application
+gunicorn --bind 0:9000 foodgram.wsgi:application
