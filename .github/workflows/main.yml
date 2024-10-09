@@ -13,7 +13,7 @@ jobs:
         image: postgres:13.10
         env:
           POSTGRES_USER: django_user
-          POSTGRES_PASSWORD: django_password
+          POSTGRES_PASSWORD: mysecretpassword
           POSTGRES_DB: django_db
         ports:
           - 5432:5432
@@ -32,7 +32,7 @@ jobs:
     - name: Test Flake8
       env:
         POSTGRES_USER: django_user
-        POSTGRES_PASSWORD: django_password
+        POSTGRES_PASSWORD: mysecretpassword
         POSTGRES_DB: django_db
         DB_HOST: 127.0.0.1
         DB_PORT: 5432
@@ -127,7 +127,7 @@ jobs:
     #    key: ${{ secrets.SSH_KEY }}
     #    passphrase: ${{ secrets.SSH_PASSPHRASE }}
     #    script: |
-    #      cd foodgram/infra
+    #      cd foodgram
     #      sudo docker compose -f docker-compose.production.yml down
     #      sudo docker compose -f docker-compose.production.yml pull
     #      sudo docker compose -f docker-compose.production.yml up -d
