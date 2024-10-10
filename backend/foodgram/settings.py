@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default=get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='').split(', ')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -70,17 +70,23 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.getenv('POSTGRES_DB', 'django_db'),
-        'USER': os.getenv('POSTGRES_USER', 'django_user'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'mysecretpassword'),
-        'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', 5432)
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': BASE_DIR / 'db.sqlite3',
+     }
+ }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+#        'NAME': os.getenv('POSTGRES_DB', 'django_db'),
+#        'USER': os.getenv('POSTGRES_USER', 'django_user'),
+#        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'mysecretpassword'),
+#        'HOST': os.getenv('DB_HOST', ''),
+#        'PORT': os.getenv('DB_PORT', 5432)
+#    }
+#}
 
 
 # Password validation
