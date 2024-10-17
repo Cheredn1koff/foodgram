@@ -20,7 +20,7 @@ class UserSignUpSerializer(UserCreateSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'id', 'username', 'first_name', 'last_name', 'password'
+            'email', 'id', 'username', 'first_name', 'last_name', 'password', 'avatar'
         )
 
     def get_is_subscribed(self, obj):
@@ -35,12 +35,13 @@ class UserSignUpSerializer(UserCreateSerializer):
 class UserGetSerializer(UserSerializer):
     """Работа с информацией о пользователях."""
     is_subscribed = serializers.SerializerMethodField()
+    avatar = Base64ImageField()
 
     class Meta:
         model = User
         fields = (
             'email', 'id', 'username', 'first_name',
-            'last_name', 'is_subscribed'
+            'last_name', 'is_subscribed', 'avatar'
         )
 
     def get_is_subscribed(self, obj):
@@ -50,6 +51,12 @@ class UserGetSerializer(UserSerializer):
                 user=request.user, author=obj
             ).exists()
         )
+
+class AvatarSerializer(UserGetSerializer):
+    """Аватар пользователя."""
+    class Meta:
+        model = User
+        fields = ('avatar', )
 
 
 class RecipeSmallSerializer(serializers.ModelSerializer):
