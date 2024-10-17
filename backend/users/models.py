@@ -39,13 +39,6 @@ class User(AbstractUser):
         blank=False,
         null=False,
     )
-    avatar = models.ImageField(
-        'Аватар',
-        upload_to='users/images/',
-        default=None,
-        null=True,
-        blank=True,
-    )
 
     class Meta:
         ordering = ['id']

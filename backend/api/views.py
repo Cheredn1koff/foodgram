@@ -1,11 +1,6 @@
-﻿import base64
-import os
-
-from django.db.models import Sum
+﻿from django.db.models import Sum
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import HttpResponse, get_object_or_404
-from django.core.files.base import ContentFile
-from djoser.views import UserViewSet
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -19,7 +14,7 @@ from api.serializers import (FavoriteSerializer, IngredientSerializer,
                              RecipeGetSerializer, ShoppingCartSerializer,
                              TagSerialiser,
                              UserSubscribeRepresentSerializer,
-                             UserSubscribeSerializer, AvatarSerializer)
+                             UserSubscribeSerializer)
 from api.utils import create_model_instance, delete_model_instance
 from recipes.models import (Favorite, Ingredient, Recipe,
                             RecipeIngredient, ShoppingCart, Tag)
@@ -49,43 +44,6 @@ class UserSubscribeView(APIView):
             )
         Subscription.objects.get(user=request.user.id, author=user_id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class UserAvatar(UserViewSet):
-    """Аватар для пользователя."""
-    @action(
-        methods=['PUT', 'PATCH'],
-        detail=False,
-        url_path='me/avatar',
-        permission_classes=[IsAuthenticated, ]
-    )
-    def avatar(self, request):
-        user = request.user
-        avatar_base64 = request.data.get('avatar')
-        if avatar_base64:
-            avatar_base64 = avatar_base64.split(",")[1]
-            avatar_data = base64.b64decode(avatar_base64)
-            avatar_file = ContentFile(avatar_data,
-                                      name=f'avatar{user.id}.png')
-            user.avatar.save(f'avatar{user.id}.png', avatar_file)
-            user.save()
-            return Response(
-                AvatarSerializer(user, context={'request': request}).data
-            )
-        else:
-            return Response({'errors': 'Аватар не предоставлен'},
-                            status=400)
-
-    @avatar.mapping.delete
-    def del_avatar(self, request):
-        user = request.user
-        if user.avatar:
-            os.remove(user.avatar.path)
-            user.avatar = None
-            user.save()
-            return Response(status=204)
-        else:
-            return Response({"errors": "У вас нет аватара"}, status=400)
 
 
 class UserSubscriptionsViewSet(mixins.ListModelMixin,
