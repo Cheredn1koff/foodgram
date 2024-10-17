@@ -9,6 +9,11 @@ from recipes.models import (Favorite, Ingredient,
                             ShoppingCart, Tag)
 from users.models import User, Subscription
 
+ALREDY_SUBSCRIBE = 'Вы уже подписаны на этого пользователя'
+ERROR_SUBSCRIBE = 'Нельзя подписываться на самого себя!'
+FAVORITE_RECIPE = 'Рецепт уже добавлен в избранное'
+SHOPPING_CART = 'Рецепт уже добавлен в список покупок'
+
 
 class UserSignUpSerializer(UserCreateSerializer):
     """Регистрации пользователей."""
@@ -96,16 +101,14 @@ class UserSubscribeSerializer(serializers.ModelSerializer):
             UniqueTogetherValidator(
                 queryset=Subscription.objects.all(),
                 fields=('user', 'author'),
-                message='Вы уже подписаны на этого пользователя'
+                message=ALREDY_SUBSCRIBE
             )
         ]
 
     def validate(self, data):
         request = self.context.get('request')
         if request.user == data['author']:
-            raise serializers.ValidationError(
-                'Нельзя подписываться на самого себя!'
-            )
+            raise serializers.ValidationError(ERROR_SUBSCRIBE)
         return data
 
     def to_representation(self, instance):
@@ -167,7 +170,7 @@ class RecipeGetSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = (
             'id', 'tags', 'author', 'ingredients', 'is_favorited',
-            'is_in_shopping_cart', 'image', 'text', 'cooking_time'
+            'is_in_shopping_cart', 'image', 'text', 'cooking_time', 'name'
         )
 
     def get_is_favorited(self, obj):
@@ -257,7 +260,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
             UniqueTogetherValidator(
                 queryset=Favorite.objects.all(),
                 fields=('user', 'recipe'),
-                message='Рецепт уже добавлен в избранное'
+                message=FAVORITE_RECIPE
             )
         ]
 
@@ -277,7 +280,7 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
             UniqueTogetherValidator(
                 queryset=ShoppingCart.objects.all(),
                 fields=('user', 'recipe'),
-                message='Рецепт уже добавлен в список покупок'
+                message=SHOPPING_CART
             )
         ]
 

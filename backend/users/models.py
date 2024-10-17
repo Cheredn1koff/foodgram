@@ -1,4 +1,5 @@
-﻿from django.contrib.auth.models import AbstractUser
+﻿from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from users.validators import validate_username
@@ -7,14 +8,14 @@ from users.validators import validate_username
 class User(AbstractUser):
     email = models.EmailField(
         'Электронная почта',
-        max_length=254,
+        max_length=settings.MAX_LENGTH_EMAIL,
         unique=True,
         blank=False,
         null=False,
     )
     username = models.CharField(
         'Имя пользователя',
-        max_length=150,
+        max_length=settings.MAX_LENGTH_USER,
         unique=True,
         blank=False,
         null=False,
@@ -22,19 +23,19 @@ class User(AbstractUser):
     )
     first_name = models.CharField(
         'Имя',
-        max_length=150,
+        max_length=settings.MAX_LENGTH_USER,
         blank=False,
         null=False,
     )
     last_name = models.CharField(
         'Фамилия',
-        max_length=150,
+        max_length=settings.MAX_LENGTH_USER,
         blank=False,
         null=False
     )
     password = models.CharField(
         'Пароль',
-        max_length=150,
+        max_length=settings.MAX_LENGTH_USER,
         blank=False,
         null=False,
     )
