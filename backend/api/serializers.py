@@ -20,7 +20,8 @@ class UserSignUpSerializer(UserCreateSerializer):
     class Meta:
         model = User
         fields = (
-            'email', 'id', 'username', 'first_name', 'last_name', 'password', 'avatar'
+            'email', 'id', 'username', 'first_name',
+            'last_name', 'password', 'avatar'
         )
 
     def get_is_subscribed(self, obj):
@@ -51,6 +52,7 @@ class UserGetSerializer(UserSerializer):
                 user=request.user, author=obj
             ).exists()
         )
+
 
 class AvatarSerializer(UserGetSerializer):
     """Аватар пользователя."""
