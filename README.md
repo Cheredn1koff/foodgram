@@ -2,3 +2,7 @@
 
 По адресу http://localhost изучите фронтенд веб-приложения, а по адресу http://localhost/api/docs/ — спецификацию API.
 
+АДМИНКА:
+LOGIN: admin
+EMAIL: admin@admin.com
+PASSWORD: admin
