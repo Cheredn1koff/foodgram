@@ -43,6 +43,8 @@ class User(AbstractUser):
         'Аватар',
         upload_to='users/images/',
         default=None,
+        null=True,
+        blank=True,
     )
 
     class Meta:
